@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  /* -- Stockroom design tokens -- */
+  --color-ink: #171a1d;
+  --color-ink-soft: #454b52;
+  --color-paper: #f6f4ef;
+  --color-paper-raised: #ffffff;
+  --color-line: #e2ddd0;
+  --color-line-strong: #c9c2b0;
+  --color-signal: #1f6b52;
+  --color-signal-dark: #164e3c;
+  --color-brass: #b8863a;
+  --color-brass-soft: #f1e4cc;
+  --color-danger: #ac3d34;
+  --color-danger-soft: #f5e2df;
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+html {
+  background: var(--color-paper);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-paper);
+}
+
+* {
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hairline ledger rule used across the app as a structural divider */
+.ledger-rule {
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-line-strong) 0,
+    var(--color-line-strong) 4px,
+    transparent 4px,
+    transparent 9px
+  );
+  height: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
