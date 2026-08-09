@@ -80,6 +80,8 @@ export default function ProductDetail() {
     );
 
   const outOfStock = product.stock <= 0;
+  const inactive = product.status === "INACTIVE";
+  const unavailable = inactive || product.status === "OUT_OF_STOCK" || outOfStock;
   const avgRating =
     reviews.length > 0
       ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
@@ -133,14 +135,18 @@ export default function ProductDetail() {
           <div className="flex items-center gap-2 mb-2 text-sm">
             <span
               className={`font-mono ${
-                outOfStock ? "text-danger" : "text-signal-dark"
+                unavailable ? "text-danger" : "text-signal-dark"
               }`}
             >
-              {outOfStock ? "Out of stock" : `${product.stock} in stock`}
+              {inactive
+                ? "Inactive"
+                : outOfStock || product.status === "OUT_OF_STOCK"
+                  ? "Out of stock"
+                  : `${product.stock} in stock`}
             </span>
           </div>
 
-          {!outOfStock && (
+          {!unavailable && (
             <div className="flex items-center gap-4 mb-5">
               <div className="flex items-center border border-line rounded-sm">
                 <button
@@ -164,11 +170,11 @@ export default function ProductDetail() {
 
           <button
             onClick={handleAddToCart}
-            disabled={outOfStock || adding}
+            disabled={unavailable || adding}
             className="flex items-center justify-center gap-2 bg-ink text-paper px-6 py-3 rounded-sm text-sm font-medium hover:bg-signal-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto"
           >
             <ShoppingBag size={16} />
-            {outOfStock ? "Sold out" : adding ? "Adding..." : "Add to cart"}
+            {unavailable ? "Unavailable" : adding ? "Adding..." : "Add to cart"}
           </button>
         </div>
       </div>

@@ -14,27 +14,32 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-paper/95 backdrop-blur border-b border-line">
-      <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="font-display text-2xl tracking-tight text-ink">
+    <header className="sticky top-0 z-40 border-b border-line bg-white/85 backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+        <Link to="/" className="flex items-center gap-2.5">
+          <img
+            src="/favicon.svg"
+            alt="Stockroom lightning logo"
+            className="h-8 w-8 object-contain"
+          />
+          <span className="font-display text-xl font-bold tracking-tight text-ink">
             Stockroom
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-ink-soft">
-          <Link to="/" className="hover:text-ink transition-colors">
+        <nav className="hidden items-center gap-7 text-sm font-medium text-ink-soft md:flex">
+          <Link to="/catalog" className="transition-colors hover:text-primary">
             Catalog
           </Link>
           {user && (
-            <Link to="/orders" className="hover:text-ink transition-colors">
+            <Link to="/orders" className="transition-colors hover:text-primary">
               Orders
             </Link>
           )}
           {isAdmin && (
             <Link
               to="/admin"
-              className="flex items-center gap-1.5 hover:text-ink transition-colors"
+              className="flex items-center gap-1.5 transition-colors hover:text-primary"
             >
               <LayoutDashboard size={15} />
               Admin
@@ -42,28 +47,28 @@ export default function Navbar() {
           )}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {user ? (
             <>
               <Link
                 to="/cart"
-                className="relative flex items-center justify-center h-9 w-9 hover:bg-paper-raised border border-transparent hover:border-line rounded-sm transition-colors"
+                className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-transparent transition-colors hover:border-line hover:bg-paper"
                 aria-label="Cart"
               >
                 <ShoppingBag size={18} />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-signal text-paper text-[10px] font-mono font-semibold h-4.5 min-w-4.5 px-1 rounded-full flex items-center justify-center">
+                  <span className="absolute -right-1.5 -top-1.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-primary px-1 font-mono text-[10px] font-semibold text-white">
                     {itemCount}
                   </span>
                 )}
               </Link>
-              <div className="hidden sm:flex items-center gap-1.5 text-sm text-ink-soft">
+              <div className="hidden items-center gap-1.5 text-sm text-ink-soft sm:flex">
                 <User size={15} />
                 {user.name.split(" ")[0]}
               </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center justify-center h-9 w-9 hover:bg-paper-raised border border-transparent hover:border-line rounded-sm transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-transparent transition-colors hover:border-line hover:bg-paper"
                 aria-label="Log out"
                 title="Log out"
               >
@@ -74,13 +79,13 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="text-sm font-medium text-ink-soft hover:text-ink transition-colors"
+                className="text-sm font-medium text-ink-soft transition-colors hover:text-primary"
               >
                 Log in
               </Link>
               <Link
                 to="/register"
-                className="text-sm font-medium bg-ink text-paper px-4 py-2 rounded-sm hover:bg-signal-dark transition-colors"
+                className="btn-gradient rounded-lg px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-indigo-500/25 transition-all hover:brightness-110"
               >
                 Sign up
               </Link>

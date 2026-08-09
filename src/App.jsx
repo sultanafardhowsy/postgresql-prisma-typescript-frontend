@@ -9,6 +9,7 @@ import AdminRoute from "./components/AdminRoute";
 import AdminLayout from "./components/AdminLayout";
 
 import Home from "./pages/Home";
+import Catalog from "./pages/Catalog";
 import ProductDetail from "./pages/ProductDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -36,6 +37,7 @@ export default function App() {
               <div className="flex-1">
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/catalog" element={<Catalog />} />
                   <Route path="/products/:id" element={<ProductDetail />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />

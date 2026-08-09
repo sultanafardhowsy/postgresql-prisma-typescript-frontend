@@ -5,6 +5,7 @@ import { useToast } from "../../context/ToastContext";
 import Spinner from "../../components/Spinner";
 import Modal from "../../components/Modal";
 import EmptyState from "../../components/EmptyState";
+import StatusBadge from "../../components/StatusBadge";
 
 export default function AdminCategories() {
   const { showToast } = useToast();
@@ -13,6 +14,7 @@ export default function AdminCategories() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [name, setName] = useState("");
+  const [status, setStatus] = useState("ACTIVE");
   const [saving, setSaving] = useState(false);
 
   const load = () => {
@@ -28,12 +30,14 @@ export default function AdminCategories() {
   const openCreate = () => {
     setEditingId(null);
     setName("");
+    setStatus("ACTIVE");
     setModalOpen(true);
   };
 
   const openEdit = (cat) => {
     setEditingId(cat.id);
     setName(cat.name);
+    setStatus(cat.status || "ACTIVE");
     setModalOpen(true);
   };
 
@@ -42,10 +46,10 @@ export default function AdminCategories() {
     setSaving(true);
     try {
       if (editingId) {
-        await api.patch(`/categories/${editingId}`, { name });
+        await api.patch(`/categories/${editingId}`, { name, status });
         showToast("Category updated");
       } else {
-        await api.post("/categories", { name });
+        await api.post("/categories", { name, status });
         showToast("Category created");
       }
       setModalOpen(false);
@@ -95,6 +99,7 @@ export default function AdminCategories() {
             >
               <span className="text-sm text-ink">{cat.name}</span>
               <div className="flex items-center gap-3">
+                <StatusBadge status={cat.status} />
                 <button
                   onClick={() => openEdit(cat)}
                   className="text-ink-soft hover:text-ink transition-colors"
@@ -129,6 +134,17 @@ export default function AdminCategories() {
               onChange={(e) => setName(e.target.value)}
               className="w-full px-3 py-2 border border-line text-sm outline-none focus:border-signal rounded-sm"
             />
+          </div>
+          <div>
+            <label className="text-xs font-medium text-ink block mb-1">Status</label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="w-full px-3 py-2 border border-line text-sm outline-none focus:border-signal rounded-sm bg-paper-raised"
+            >
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="INACTIVE">INACTIVE</option>
+            </select>
           </div>
           <button
             type="submit"

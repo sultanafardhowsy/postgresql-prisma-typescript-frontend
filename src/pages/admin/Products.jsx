@@ -5,6 +5,7 @@ import { useToast } from "../../context/ToastContext";
 import Spinner from "../../components/Spinner";
 import Modal from "../../components/Modal";
 import EmptyState from "../../components/EmptyState";
+import StatusBadge from "../../components/StatusBadge";
 
 const emptyForm = {
   title: "",
@@ -12,6 +13,7 @@ const emptyForm = {
   price: "",
   stock: "",
   image: "",
+  status: "ACTIVE",
   categoryId: "",
 };
 
@@ -54,6 +56,7 @@ export default function AdminProducts() {
       price: product.price,
       stock: product.stock,
       image: product.image || "",
+      status: product.status || "ACTIVE",
       categoryId: product.categoryId,
     });
     setModalOpen(true);
@@ -126,6 +129,7 @@ export default function AdminProducts() {
               <tr className="border-b border-line bg-paper-raised text-left text-xs uppercase tracking-wide text-ink-soft">
                 <th className="px-4 py-3 font-medium">Title</th>
                 <th className="px-4 py-3 font-medium">Category</th>
+                <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Price</th>
                 <th className="px-4 py-3 font-medium">Stock</th>
                 <th className="px-4 py-3 font-medium w-20"></th>
@@ -137,6 +141,9 @@ export default function AdminProducts() {
                   <td className="px-4 py-3 text-ink">{p.title}</td>
                   <td className="px-4 py-3 text-ink-soft">
                     {p.category?.name || "—"}
+                  </td>
+                  <td className="px-4 py-3">
+                    <StatusBadge status={p.status} />
                   </td>
                   <td className="px-4 py-3 font-mono">${p.price.toFixed(2)}</td>
                   <td className="px-4 py-3 font-mono">{p.stock}</td>
@@ -235,6 +242,20 @@ export default function AdminProducts() {
                   {c.name}
                 </option>
               ))}
+            </select>
+          </div>
+          <div>
+            <label className="text-xs font-medium text-ink block mb-1">
+              Status
+            </label>
+            <select
+              value={form.status}
+              onChange={(e) => setForm({ ...form, status: e.target.value })}
+              className="w-full px-3 py-2 border border-line text-sm outline-none focus:border-signal rounded-sm bg-paper-raised"
+            >
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="INACTIVE">INACTIVE</option>
+              <option value="OUT_OF_STOCK">OUT OF STOCK</option>
             </select>
           </div>
           <div>
